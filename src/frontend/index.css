@@ -1,0 +1,163 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Fonts ──────────────────────────────────────────────── */
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Crimson Pro";
+  src: url("/assets/fonts/CrimsonPro.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* ── Soul Guidance 1313 — Mystical Dark Theme ── */
+    /* Deep indigo background with gold accents */
+    --background: 0.12 0.025 280;
+    --foreground: 0.95 0.015 80;
+
+    --card: 0.16 0.03 275;
+    --card-foreground: 0.95 0.015 80;
+
+    --popover: 0.18 0.035 275;
+    --popover-foreground: 0.95 0.015 80;
+
+    /* Gold primary */
+    --primary: 0.78 0.12 75;
+    --primary-foreground: 0.12 0.025 280;
+
+    /* Violet secondary */
+    --secondary: 0.25 0.055 285;
+    --secondary-foreground: 0.9 0.02 80;
+
+    --muted: 0.2 0.04 278;
+    --muted-foreground: 0.65 0.03 280;
+
+    /* Warm amber accent */
+    --accent: 0.72 0.14 65;
+    --accent-foreground: 0.12 0.025 280;
+
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+
+    --border: 0.28 0.04 280;
+    --input: 0.22 0.04 278;
+    --ring: 0.78 0.12 75;
+
+    /* Chart colors - mystical palette */
+    --chart-1: 0.78 0.12 75;
+    --chart-2: 0.6 0.14 290;
+    --chart-3: 0.55 0.18 300;
+    --chart-4: 0.7 0.1 50;
+    --chart-5: 0.65 0.13 260;
+
+    --sidebar: 0.14 0.03 278;
+    --sidebar-foreground: 0.95 0.015 80;
+    --sidebar-primary: 0.78 0.12 75;
+    --sidebar-primary-foreground: 0.12 0.025 280;
+    --sidebar-accent: 0.2 0.04 278;
+    --sidebar-accent-foreground: 0.9 0.02 80;
+    --sidebar-border: 0.28 0.04 280;
+    --sidebar-ring: 0.78 0.12 75;
+
+    /* Custom soul guidance tokens */
+    --gold: 0.78 0.12 75;
+    --gold-bright: 0.85 0.14 75;
+    --gold-dim: 0.62 0.1 72;
+    --violet-deep: 0.22 0.06 285;
+    --violet-mid: 0.38 0.1 290;
+    --indigo-dark: 0.12 0.025 280;
+    --star-white: 0.96 0.01 80;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Crimson Pro", Georgia, serif;
+  }
+}
+
+/* ─── Custom Utilities ──────────────────────────────── */
+@layer utilities {
+  .font-display {
+    font-family: "Fraunces", Georgia, serif;
+  }
+
+  .text-gold {
+    color: oklch(var(--gold));
+  }
+
+  .bg-gold {
+    background-color: oklch(var(--gold));
+  }
+
+  .border-gold {
+    border-color: oklch(var(--gold));
+  }
+
+  .gradient-mystical {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--indigo-dark)) 0%,
+      oklch(var(--violet-deep)) 50%,
+      oklch(0.15 0.04 285) 100%
+    );
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(
+      135deg,
+      oklch(var(--gold-dim)) 0%,
+      oklch(var(--gold-bright)) 50%,
+      oklch(var(--gold)) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px oklch(var(--gold) / 0.3), 0 0 60px oklch(var(--gold) / 0.1);
+  }
+
+  .glow-gold-sm {
+    box-shadow: 0 0 10px oklch(var(--gold) / 0.25);
+  }
+
+  .star-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .star-divider::before,
+  .star-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      oklch(var(--gold) / 0.5),
+      transparent
+    );
+  }
+}
