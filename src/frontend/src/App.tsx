@@ -24,6 +24,7 @@ import {
   Mail,
   Menu,
   Moon,
+  Quote,
   Sparkles,
   Star,
   User,
@@ -471,6 +472,125 @@ function ServicesSection({
             description="Your name vibrates at a unique frequency that influences your life's energy. Align your name's numerological vibration with your destiny number to attract prosperity, harmony, and positive cosmic support."
             onBook={() => onBookService("Name Correction")}
           />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Testimonials Section ──────────────────────────────────
+const testimonials = [
+  {
+    name: "Shubhangi Tiwari",
+    service: "Tarot Card Reading",
+    feedback:
+      "Kalpana's tarot reading was an experience I didn't expect to be so deeply meaningful. She tapped into exactly what I was struggling with and gave me clarity I had been searching for months. Her guidance helped me finally make a major life decision with confidence and peace.",
+    stars: 5,
+    ocid: "testimonials.item.1",
+  },
+  {
+    name: "Pankaj Verma",
+    service: "Kundali Analysis",
+    feedback:
+      "The kundali analysis Kalpana provided was incredibly detailed — every planetary placement she explained matched events in my life so accurately. She gave me a clear picture of my strengths, challenges, and what the coming years hold for me. I felt truly seen and understood through this reading.",
+    stars: 5,
+    ocid: "testimonials.item.2",
+  },
+];
+
+function TestimonialsSection() {
+  return (
+    <section
+      id="testimonials"
+      data-ocid="testimonials.section"
+      className="py-28 relative overflow-hidden"
+    >
+      {/* Atmospheric background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-sky-deep/15 to-background" />
+      <div
+        className="absolute inset-0 opacity-30"
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse 80% 50% at 50% 50%, oklch(0.72 0.09 220 / 0.12) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative container mx-auto px-6">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <p className="font-body text-gold/80 tracking-[0.3em] uppercase text-sm mb-4">
+            Voices of the Seekers
+          </p>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-6">
+            Client <span className="text-gradient-gold">Testimonials</span>
+          </h2>
+          <div className="star-divider text-gold/40 max-w-xs mx-auto">
+            <Moon className="w-4 h-4 text-gold/60" />
+          </div>
+        </motion.div>
+
+        {/* Testimonial Cards */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {testimonials.map((t, idx) => (
+            <motion.div
+              key={t.name}
+              data-ocid={t.ocid}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.7, delay: idx * 0.15 }}
+              className="relative group rounded-2xl border border-border bg-card hover:border-gold/50 transition-all duration-500 p-8 flex flex-col gap-5"
+            >
+              {/* Corner accents */}
+              <div className="absolute top-0 left-0 w-10 h-10 border-t-2 border-l-2 border-gold/30 rounded-tl-2xl" />
+              <div className="absolute bottom-0 right-0 w-10 h-10 border-b-2 border-r-2 border-gold/30 rounded-br-2xl" />
+
+              {/* Quote icon + stars row */}
+              <div className="flex items-start justify-between">
+                <div className="w-10 h-10 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center shrink-0 group-hover:bg-gold/20 transition-colors duration-300">
+                  <Quote className="w-5 h-5 text-gold" />
+                </div>
+                {/* 5 stars */}
+                <div className="flex items-center gap-0.5 mt-1">
+                  {[1, 2, 3, 4, 5].slice(0, t.stars).map((si) => (
+                    <Star key={si} className="w-4 h-4 text-gold fill-gold" />
+                  ))}
+                </div>
+              </div>
+
+              {/* Feedback text */}
+              <p className="font-body text-foreground/80 leading-relaxed text-base italic flex-1">
+                "{t.feedback}"
+              </p>
+
+              {/* Divider */}
+              <div className="h-px bg-border" />
+
+              {/* Client name + service badge */}
+              <div className="flex items-center justify-between flex-wrap gap-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center shrink-0">
+                    <User className="w-4 h-4 text-gold" />
+                  </div>
+                  <span className="font-display font-bold text-foreground text-base">
+                    {t.name}
+                  </span>
+                </div>
+                <Badge
+                  variant="outline"
+                  className="font-body text-xs tracking-wider uppercase bg-gold/5 border-gold/30 text-gold"
+                >
+                  {t.service}
+                </Badge>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -1131,6 +1251,7 @@ export default function App() {
       <main>
         <HeroSection />
         <ServicesSection onBookService={handleBookService} />
+        <TestimonialsSection />
         <AboutSection />
         <div ref={bookingRef}>
           <BookingSection preselectedService={preselectedService} />
