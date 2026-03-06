@@ -242,17 +242,18 @@ function HeroSection() {
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(160deg, oklch(0.97 0.03 215) 0%, oklch(0.94 0.04 210) 40%, oklch(0.97 0.025 218) 100%)",
-      }}
     >
-      {/* Soft atmospheric clouds / light bloom */}
+      {/* Background image */}
       <div
-        className="absolute inset-0 opacity-30"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: "url('/assets/uploads/background-1.jpg')" }}
+      />
+      {/* Dark + warm overlay for readability */}
+      <div
+        className="absolute inset-0"
         style={{
-          backgroundImage:
-            "radial-gradient(ellipse 80% 60% at 30% 20%, oklch(0.99 0.02 200) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 75% 70%, oklch(0.97 0.03 215) 0%, transparent 60%)",
+          background:
+            "linear-gradient(160deg, rgba(10,8,20,0.72) 0%, rgba(30,18,8,0.65) 50%, rgba(10,8,20,0.78) 100%)",
         }}
       />
       <StarField />
@@ -270,17 +271,17 @@ function HeroSection() {
             <div className="h-px w-16 bg-gold/50" />
           </div>
 
-          <p className="font-body text-sm tracking-[0.3em] uppercase text-gold/80 mb-4">
+          <p className="font-body text-sm tracking-[0.3em] uppercase text-gold/90 mb-4">
             By Kalpana Sharma
           </p>
 
           <h1 className="font-display text-5xl md:text-7xl font-bold leading-tight mb-6">
             <span className="text-gradient-gold">Soul Guidance</span>
             <br />
-            <span className="text-foreground opacity-90">1313</span>
+            <span className="text-white opacity-95">1313</span>
           </h1>
 
-          <p className="font-body text-xl md:text-2xl text-foreground/80 italic mb-10 tracking-wide">
+          <p className="font-body text-xl md:text-2xl text-white/85 italic mb-10 tracking-wide">
             Insightful Readings, Empowered Life
           </p>
 
@@ -304,7 +305,7 @@ function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2 }}
-            className="mt-8 text-muted-foreground font-body text-sm tracking-wider"
+            className="mt-8 text-white/60 font-body text-sm tracking-wider"
           >
             Tarot Card Readings · Kundali Analysis · DoB Analysis · Name
             Correction
