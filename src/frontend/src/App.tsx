@@ -1,4 +1,6 @@
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -8,22 +10,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Toaster } from "@/components/ui/sonner";
 import { Textarea } from "@/components/ui/textarea";
 import {
   AlertCircle,
+  ArrowLeft,
   CheckCircle2,
+  Clock,
+  Inbox,
+  Instagram,
   Loader2,
+  Mail,
   Menu,
   Moon,
   Sparkles,
   Star,
+  User,
   X,
+  Youtube,
 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import { useSubmitInquiry } from "./hooks/useQueries";
+import { useGetAllInquiries, useSubmitInquiry } from "./hooks/useQueries";
 
 // ─── Smooth scroll helper ──────────────────────────────────
 function scrollToSection(id: string) {
@@ -89,7 +99,7 @@ function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-indigo-dark/90 backdrop-blur-md border-b border-border shadow-lg"
+          ? "bg-background/90 backdrop-blur-md border-b border-border shadow-md"
           : "bg-transparent"
       }`}
     >
@@ -114,19 +124,41 @@ function Navbar() {
               key={link.id}
               data-ocid={link.ocid}
               onClick={() => scrollToSection(link.id)}
-              className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-gold transition-colors duration-200"
+              className="font-body text-sm tracking-widest uppercase text-muted-foreground hover:text-[oklch(var(--gold))] transition-colors duration-200"
             >
               {link.label}
             </button>
           ))}
         </div>
 
-        {/* Book Now CTA */}
-        <div className="hidden md:flex">
+        {/* YouTube + Instagram + Book Now CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          <a
+            href="https://youtube.com/@soul_guidance1313?si=FyHrbJsu6uPBn91"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="nav.youtube.link"
+            className="flex items-center gap-1.5 text-red-500 hover:text-red-600 transition-colors font-body text-sm font-medium"
+            aria-label="YouTube Channel"
+          >
+            <Youtube className="w-5 h-5" />
+            <span className="hidden lg:inline">YouTube</span>
+          </a>
+          <a
+            href="https://www.instagram.com/soul_guidance1313/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="nav.instagram.link"
+            className="flex items-center gap-1.5 text-pink-500 hover:text-pink-600 transition-colors font-body text-sm font-medium"
+            aria-label="Instagram"
+          >
+            <Instagram className="w-5 h-5" />
+            <span className="hidden lg:inline">Instagram</span>
+          </a>
           <Button
             data-ocid="nav.book.button"
             onClick={() => scrollToSection("contact")}
-            className="bg-gold text-indigo-dark font-body font-semibold text-sm tracking-wider uppercase hover:bg-gold-bright transition-all glow-gold-sm px-6"
+            className="bg-[oklch(var(--gold))] text-white font-body font-semibold text-sm tracking-wider uppercase hover:bg-[oklch(var(--gold-bright))] transition-all glow-gold-sm px-6"
           >
             Book Now
           </Button>
@@ -151,7 +183,7 @@ function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-indigo-dark/95 backdrop-blur-md border-t border-border px-6 py-6 flex flex-col gap-4"
+            className="md:hidden bg-background/95 backdrop-blur-md border-t border-border px-6 py-6 flex flex-col gap-4"
           >
             {navLinks.map((link) => (
               <button
@@ -167,13 +199,33 @@ function Navbar() {
                 {link.label}
               </button>
             ))}
+            <a
+              href="https://youtube.com/@soul_guidance1313?si=FyHrbJsu6uPBn91"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ocid="nav.youtube.link"
+              className="flex items-center gap-2 text-red-500 hover:text-red-600 font-body text-sm font-medium transition-colors"
+            >
+              <Youtube className="w-5 h-5" />
+              YouTube — @soul_guidance1313
+            </a>
+            <a
+              href="https://www.instagram.com/soul_guidance1313/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-ocid="nav.instagram.link"
+              className="flex items-center gap-2 text-pink-500 hover:text-pink-600 font-body text-sm font-medium transition-colors"
+            >
+              <Instagram className="w-5 h-5" />
+              Instagram — @soul_guidance1313
+            </a>
             <Button
               data-ocid="nav.book.button"
               onClick={() => {
                 scrollToSection("contact");
                 setMenuOpen(false);
               }}
-              className="bg-gold text-indigo-dark font-semibold mt-2 glow-gold-sm"
+              className="bg-[oklch(var(--gold))] text-white font-semibold mt-2 glow-gold-sm"
             >
               Book Now
             </Button>
@@ -190,16 +242,19 @@ function HeroSection() {
     <section
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(160deg, oklch(0.97 0.03 215) 0%, oklch(0.94 0.04 210) 40%, oklch(0.97 0.025 218) 100%)",
+      }}
     >
-      {/* Background */}
+      {/* Soft atmospheric clouds / light bloom */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        className="absolute inset-0 opacity-30"
         style={{
-          backgroundImage: "url('/assets/generated/hero-bg.dim_1400x800.jpg')",
+          backgroundImage:
+            "radial-gradient(ellipse 80% 60% at 30% 20%, oklch(0.99 0.02 200) 0%, transparent 70%), radial-gradient(ellipse 60% 50% at 75% 70%, oklch(0.97 0.03 215) 0%, transparent 60%)",
         }}
       />
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-indigo-dark/65" />
       <StarField />
 
       {/* Content */}
@@ -238,7 +293,7 @@ function HeroSection() {
               data-ocid="hero.book.primary_button"
               onClick={() => scrollToSection("contact")}
               size="lg"
-              className="bg-gold text-indigo-dark font-display font-bold text-lg px-10 py-6 glow-gold hover:bg-gold-bright hover:scale-105 transition-all duration-300 tracking-wider"
+              className="bg-[oklch(var(--gold))] text-white font-display font-bold text-lg px-10 py-6 glow-gold hover:bg-[oklch(var(--gold-bright))] hover:scale-105 transition-all duration-300 tracking-wider"
             >
               <Star className="w-5 h-5 mr-2" />
               Book a Reading
@@ -251,7 +306,8 @@ function HeroSection() {
             transition={{ delay: 1.2 }}
             className="mt-8 text-muted-foreground font-body text-sm tracking-wider"
           >
-            Tarot Card Readings · Kundali Analysis · Spiritual Guidance
+            Tarot Card Readings · Kundali Analysis · DoB Analysis · Name
+            Correction
           </motion.p>
         </motion.div>
       </div>
@@ -311,7 +367,7 @@ function ServiceCard({
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/30 to-transparent" />
 
         {/* Price Badge */}
-        <div className="absolute top-4 right-4 bg-indigo-dark/80 backdrop-blur-sm border border-gold/40 rounded-full px-4 py-1.5">
+        <div className="absolute top-4 right-4 bg-white/85 backdrop-blur-sm border border-[oklch(var(--gold)/0.5)] rounded-full px-4 py-1.5">
           <span className="font-display font-bold text-gold text-sm">
             {price}
           </span>
@@ -377,7 +433,7 @@ function ServicesSection({
         </motion.div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           <ServiceCard
             cardOcid="services.tarot.card"
             bookOcid="services.tarot.book.button"
@@ -395,6 +451,24 @@ function ServicesSection({
             price="Rs 1,100"
             description="Discover your divine blueprint through Vedic astrology. A comprehensive birth chart analysis reveals your life's purpose, karmic patterns, planetary influences, and the cosmic forces shaping your destiny."
             onBook={() => onBookService("Kundali Analysis")}
+          />
+          <ServiceCard
+            cardOcid="services.dob.card"
+            bookOcid="services.dob.book.button"
+            image="/assets/generated/dob-analysis.dim_600x400.jpg"
+            title="DoB Analysis"
+            price="Rs 501"
+            description="Your date of birth holds the key to your soul's journey. Through numerology and Vedic principles, uncover your life path number, personality strengths, auspicious dates, and the deeper meaning encoded in your birth day."
+            onBook={() => onBookService("DoB Analysis")}
+          />
+          <ServiceCard
+            cardOcid="services.name.card"
+            bookOcid="services.name.book.button"
+            image="/assets/generated/name-correction.dim_600x400.jpg"
+            title="Name Correction"
+            price="Rs 501"
+            description="Your name vibrates at a unique frequency that influences your life's energy. Align your name's numerological vibration with your destiny number to attract prosperity, harmony, and positive cosmic support."
+            onBook={() => onBookService("Name Correction")}
           />
         </div>
       </div>
@@ -450,7 +524,7 @@ function AboutSection() {
 
             <div className="space-y-4 font-body text-muted-foreground leading-relaxed text-lg">
               <p>
-                With over 15 years of devoted practice in tarot and Vedic
+                With over 4 years of devoted practice in tarot and Vedic
                 astrology, Kalpana Sharma has guided hundreds of souls toward
                 clarity, healing, and transformation.
               </p>
@@ -468,7 +542,7 @@ function AboutSection() {
             </div>
 
             <div className="mt-8 flex flex-wrap gap-4">
-              {["15+ Years Experience", "500+ Readings", "Vedic Astrology"].map(
+              {["4+ Years Experience", "500+ Readings", "Vedic Astrology"].map(
                 (badge) => (
                   <span
                     key={badge}
@@ -551,6 +625,15 @@ function BookingSection({
           <p className="font-body text-muted-foreground text-lg">
             Fill out the form below and Kalpana will get back to you within 24
             hours.
+          </p>
+          <p className="font-body text-muted-foreground/70 text-sm mt-3">
+            Or email us directly at{" "}
+            <a
+              href="mailto:soulguidance1313@gmail.com"
+              className="text-gold hover:text-gold-bright underline underline-offset-4 decoration-gold/40 hover:decoration-gold transition-colors duration-200 font-medium"
+            >
+              soulguidance1313@gmail.com
+            </a>
           </p>
         </motion.div>
 
@@ -672,6 +755,18 @@ function BookingSection({
                       >
                         Kundali Analysis — Rs 1,100
                       </SelectItem>
+                      <SelectItem
+                        value="DoB Analysis"
+                        className="font-body text-foreground focus:bg-gold/10 focus:text-gold"
+                      >
+                        DoB Analysis — Rs 501
+                      </SelectItem>
+                      <SelectItem
+                        value="Name Correction"
+                        className="font-body text-foreground focus:bg-gold/10 focus:text-gold"
+                      >
+                        Name Correction — Rs 501
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -711,7 +806,7 @@ function BookingSection({
                   data-ocid="booking.submit.button"
                   type="submit"
                   disabled={isPending}
-                  className="w-full bg-gold text-indigo-dark font-display font-bold text-base tracking-wider uppercase py-6 glow-gold hover:bg-gold-bright hover:scale-[1.02] transition-all duration-300 disabled:opacity-60 disabled:scale-100"
+                  className="w-full bg-[oklch(var(--gold))] text-white font-display font-bold text-base tracking-wider uppercase py-6 glow-gold hover:bg-[oklch(var(--gold-bright))] hover:scale-[1.02] transition-all duration-300 disabled:opacity-60 disabled:scale-100"
                 >
                   {isPending ? (
                     <>
@@ -753,13 +848,39 @@ function Footer() {
         <p className="font-body text-muted-foreground italic text-sm mb-6">
           Insightful Readings, Empowered Life
         </p>
-        <div className="flex items-center justify-center gap-4 text-muted-foreground/60 text-xs font-body mb-6">
+        <div className="flex items-center justify-center gap-4 text-muted-foreground/60 text-xs font-body mb-6 flex-wrap">
           <span>Tarot Card Reading</span>
           <span className="text-gold/40">✦</span>
           <span>Kundali Analysis</span>
           <span className="text-gold/40">✦</span>
-          <span>Spiritual Guidance</span>
+          <span>DoB Analysis</span>
+          <span className="text-gold/40">✦</span>
+          <span>Name Correction</span>
         </div>
+        {/* Social Links */}
+        <div className="flex items-center justify-center gap-3 flex-wrap mb-6">
+          <a
+            href="https://youtube.com/@soul_guidance1313?si=FyHrbJsu6uPBn91"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="footer.youtube.link"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-red-400/40 bg-red-50 text-red-600 hover:bg-red-100 hover:border-red-500/60 transition-all duration-200 font-body text-sm font-medium"
+          >
+            <Youtube className="w-4 h-4" />
+            @soul_guidance1313
+          </a>
+          <a
+            href="https://www.instagram.com/soul_guidance1313/"
+            target="_blank"
+            rel="noopener noreferrer"
+            data-ocid="footer.instagram.link"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-pink-400/40 bg-pink-50 text-pink-600 hover:bg-pink-100 hover:border-pink-500/60 transition-all duration-200 font-body text-sm font-medium"
+          >
+            <Instagram className="w-4 h-4" />
+            @soul_guidance1313
+          </a>
+        </div>
+
         <div className="h-px bg-border max-w-xs mx-auto mb-6" />
         <p className="font-body text-muted-foreground/50 text-xs">
           © {year} Soul Guidance 1313 · All rights reserved
@@ -775,8 +896,197 @@ function Footer() {
             caffeine.ai
           </a>
         </p>
+        <div className="mt-4">
+          <a
+            href="#/admin"
+            data-ocid="footer.admin.link"
+            className="font-body text-muted-foreground/20 text-xs hover:text-muted-foreground/50 transition-colors duration-200"
+          >
+            Admin
+          </a>
+        </div>
       </div>
     </footer>
+  );
+}
+
+// ─── Admin Page ────────────────────────────────────────────
+function AdminPage() {
+  const { data: inquiries, isLoading, isError } = useGetAllInquiries();
+
+  const formatTimestamp = (ts: bigint) => {
+    // Motoko timestamps are in nanoseconds
+    const ms = Number(ts / 1_000_000n);
+    if (ms === 0) return "Unknown date";
+    const date = new Date(ms);
+    return date.toLocaleString("en-IN", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
+  };
+
+  const serviceColor = (type: string) => {
+    if (type.toLowerCase().includes("tarot"))
+      return "bg-gold/10 text-gold border-gold/30";
+    if (type.toLowerCase().includes("kundali"))
+      return "bg-violet-deep/40 text-foreground/80 border-border";
+    return "bg-muted text-muted-foreground border-border";
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <Toaster position="top-center" />
+
+      {/* Admin Header */}
+      <header className="border-b border-border bg-card/60 backdrop-blur-md sticky top-0 z-40">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Inbox className="w-5 h-5 text-gold" />
+            <span className="font-display text-lg font-semibold text-foreground">
+              Soul Guidance — Inbox
+            </span>
+          </div>
+          <button
+            type="button"
+            data-ocid="admin.back.button"
+            onClick={() => {
+              window.location.hash = "";
+              window.location.reload();
+            }}
+            className="flex items-center gap-2 text-muted-foreground hover:text-gold transition-colors font-body text-sm tracking-wide"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to site
+          </button>
+        </div>
+      </header>
+
+      <main className="container mx-auto px-6 py-12 max-w-4xl">
+        {/* Page Title */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-10"
+        >
+          <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-2">
+            All <span className="text-gradient-gold">Inquiries</span>
+          </h1>
+          <p className="font-body text-muted-foreground text-sm">
+            Showing all submitted booking queries
+          </p>
+        </motion.div>
+
+        {/* Loading */}
+        {isLoading && (
+          <div data-ocid="admin.loading_state" className="space-y-4">
+            {[1, 2, 3].map((i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-border bg-card p-6"
+              >
+                <Skeleton className="h-5 w-48 mb-3 bg-muted/60" />
+                <Skeleton className="h-4 w-full mb-2 bg-muted/40" />
+                <Skeleton className="h-4 w-3/4 bg-muted/40" />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Error */}
+        {isError && (
+          <div
+            data-ocid="admin.error_state"
+            className="flex items-center gap-3 text-destructive font-body text-sm p-4 rounded-xl bg-destructive/10 border border-destructive/20"
+          >
+            <AlertCircle className="w-5 h-5 shrink-0" />
+            <span>Failed to load inquiries. Please refresh the page.</span>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && !isError && inquiries?.length === 0 && (
+          <div data-ocid="admin.empty_state" className="text-center py-20">
+            <div className="w-16 h-16 rounded-full bg-gold/10 border border-gold/20 flex items-center justify-center mx-auto mb-4">
+              <Inbox className="w-7 h-7 text-gold/60" />
+            </div>
+            <p className="font-display text-xl text-foreground/60 mb-2">
+              No inquiries yet
+            </p>
+            <p className="font-body text-muted-foreground text-sm">
+              Submissions will appear here once visitors book a reading.
+            </p>
+          </div>
+        )}
+
+        {/* Inquiry Cards */}
+        {!isLoading && !isError && inquiries && inquiries.length > 0 && (
+          <div data-ocid="admin.inquiries.list" className="space-y-5">
+            {[...inquiries]
+              .sort((a, b) => Number(b.timestamp - a.timestamp))
+              .map((inquiry, idx) => (
+                <motion.div
+                  key={`${inquiry.name}-${String(inquiry.timestamp)}`}
+                  data-ocid={`admin.inquiry.item.${idx + 1}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                >
+                  <Card className="border-border bg-card hover:border-gold/30 transition-all duration-300 overflow-hidden">
+                    {/* Gold accent line on left */}
+                    <div className="flex">
+                      <div className="w-1 shrink-0 bg-gold/40 rounded-l-xl" />
+                      <div className="flex-1">
+                        <CardHeader className="pb-3 pt-5 px-6">
+                          <div className="flex items-start justify-between gap-3 flex-wrap">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center shrink-0">
+                                <User className="w-4 h-4 text-gold" />
+                              </div>
+                              <div>
+                                <CardTitle className="font-display text-lg text-foreground leading-tight">
+                                  {inquiry.name}
+                                </CardTitle>
+                                <div className="flex items-center gap-1.5 mt-0.5">
+                                  <Mail className="w-3 h-3 text-muted-foreground/60" />
+                                  <span className="font-body text-xs text-muted-foreground">
+                                    {inquiry.contact}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <Badge
+                                variant="outline"
+                                className={`font-body text-xs tracking-wider uppercase ${serviceColor(inquiry.serviceType)}`}
+                              >
+                                {inquiry.serviceType}
+                              </Badge>
+                              <div className="flex items-center gap-1 text-muted-foreground/50 font-body text-xs">
+                                <Clock className="w-3 h-3" />
+                                <span>
+                                  {formatTimestamp(inquiry.timestamp)}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="px-6 pb-5">
+                          <div className="bg-background/50 rounded-xl border border-border/60 p-4">
+                            <p className="font-body text-sm text-foreground/80 leading-relaxed whitespace-pre-wrap">
+                              {inquiry.message}
+                            </p>
+                          </div>
+                        </CardContent>
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+          </div>
+        )}
+      </main>
+    </div>
   );
 }
 
@@ -784,12 +1094,23 @@ function Footer() {
 export default function App() {
   const [preselectedService, setPreselectedService] = useState("");
   const bookingRef = useRef<HTMLDivElement>(null);
+  const [hash, setHash] = useState(() => window.location.hash);
+
+  useEffect(() => {
+    const onHashChange = () => setHash(window.location.hash);
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
 
   const handleBookService = (service: string) => {
     setPreselectedService(service);
     // Slight delay to allow state update before scroll
     setTimeout(() => scrollToSection("contact"), 50);
   };
+
+  if (hash === "#/admin") {
+    return <AdminPage />;
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">

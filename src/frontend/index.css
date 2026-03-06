@@ -22,63 +22,63 @@
   :root {
     --radius: 0.75rem;
 
-    /* ── Soul Guidance 1313 — Mystical Dark Theme ── */
-    /* Deep indigo background with gold accents */
-    --background: 0.12 0.025 280;
-    --foreground: 0.95 0.015 80;
+    /* ── Soul Guidance 1313 — Very Light Sky Blue & Earthy Theme ── */
+    /* Very light sky blue background, warm earthy terracotta fonts */
+    --background: 0.965 0.025 212;
+    --foreground: 0.28 0.06 45;
 
-    --card: 0.16 0.03 275;
-    --card-foreground: 0.95 0.015 80;
+    --card: 0.985 0.012 205;
+    --card-foreground: 0.28 0.06 45;
 
-    --popover: 0.18 0.035 275;
-    --popover-foreground: 0.95 0.015 80;
+    --popover: 0.98 0.012 205;
+    --popover-foreground: 0.28 0.06 45;
 
-    /* Gold primary */
-    --primary: 0.78 0.12 75;
-    --primary-foreground: 0.12 0.025 280;
+    /* Terracotta/earthy primary */
+    --primary: 0.55 0.13 42;
+    --primary-foreground: 0.98 0.005 80;
 
-    /* Violet secondary */
-    --secondary: 0.25 0.055 285;
-    --secondary-foreground: 0.9 0.02 80;
+    /* Pale sky blue secondary */
+    --secondary: 0.90 0.035 212;
+    --secondary-foreground: 0.28 0.06 220;
 
-    --muted: 0.2 0.04 278;
-    --muted-foreground: 0.65 0.03 280;
+    --muted: 0.93 0.022 210;
+    --muted-foreground: 0.50 0.055 48;
 
-    /* Warm amber accent */
-    --accent: 0.72 0.14 65;
-    --accent-foreground: 0.12 0.025 280;
+    /* Warm sienna/sand accent */
+    --accent: 0.72 0.11 55;
+    --accent-foreground: 0.15 0.04 45;
 
     --destructive: 0.577 0.245 27.325;
     --destructive-foreground: 0.985 0 0;
 
-    --border: 0.28 0.04 280;
-    --input: 0.22 0.04 278;
-    --ring: 0.78 0.12 75;
+    --border: 0.86 0.025 210;
+    --input: 0.94 0.018 210;
+    --ring: 0.55 0.13 42;
 
-    /* Chart colors - mystical palette */
-    --chart-1: 0.78 0.12 75;
-    --chart-2: 0.6 0.14 290;
-    --chart-3: 0.55 0.18 300;
-    --chart-4: 0.7 0.1 50;
-    --chart-5: 0.65 0.13 260;
+    /* Chart colors - earthy palette */
+    --chart-1: 0.55 0.13 42;
+    --chart-2: 0.62 0.11 58;
+    --chart-3: 0.52 0.10 30;
+    --chart-4: 0.68 0.07 210;
+    --chart-5: 0.60 0.10 80;
 
-    --sidebar: 0.14 0.03 278;
-    --sidebar-foreground: 0.95 0.015 80;
-    --sidebar-primary: 0.78 0.12 75;
-    --sidebar-primary-foreground: 0.12 0.025 280;
-    --sidebar-accent: 0.2 0.04 278;
-    --sidebar-accent-foreground: 0.9 0.02 80;
-    --sidebar-border: 0.28 0.04 280;
-    --sidebar-ring: 0.78 0.12 75;
+    --sidebar: 0.95 0.02 210;
+    --sidebar-foreground: 0.28 0.06 45;
+    --sidebar-primary: 0.55 0.13 42;
+    --sidebar-primary-foreground: 0.98 0.005 80;
+    --sidebar-accent: 0.91 0.022 210;
+    --sidebar-accent-foreground: 0.28 0.06 45;
+    --sidebar-border: 0.86 0.025 210;
+    --sidebar-ring: 0.55 0.13 42;
 
-    /* Custom soul guidance tokens */
-    --gold: 0.78 0.12 75;
-    --gold-bright: 0.85 0.14 75;
-    --gold-dim: 0.62 0.1 72;
-    --violet-deep: 0.22 0.06 285;
-    --violet-mid: 0.38 0.1 290;
-    --indigo-dark: 0.12 0.025 280;
-    --star-white: 0.96 0.01 80;
+    /* Custom soul guidance tokens — warm terracotta gold on sky blue */
+    --gold: 0.58 0.13 46;
+    --gold-bright: 0.66 0.15 50;
+    --gold-dim: 0.48 0.10 44;
+    --violet-deep: 0.90 0.035 212;
+    --violet-mid: 0.82 0.05 210;
+    --indigo-dark: 0.965 0.025 212;
+    --star-white: 0.98 0.005 75;
   }
 
   * {
@@ -116,9 +116,9 @@
   .gradient-mystical {
     background: linear-gradient(
       135deg,
-      oklch(var(--indigo-dark)) 0%,
-      oklch(var(--violet-deep)) 50%,
-      oklch(0.15 0.04 285) 100%
+      oklch(0.92 0.04 215) 0%,
+      oklch(0.88 0.04 215) 50%,
+      oklch(0.94 0.03 200) 100%
     );
   }
 
@@ -135,11 +135,11 @@
   }
 
   .glow-gold {
-    box-shadow: 0 0 20px oklch(var(--gold) / 0.3), 0 0 60px oklch(var(--gold) / 0.1);
+    box-shadow: 0 0 20px oklch(var(--gold) / 0.25), 0 0 50px oklch(var(--gold) / 0.1);
   }
 
   .glow-gold-sm {
-    box-shadow: 0 0 10px oklch(var(--gold) / 0.25);
+    box-shadow: 0 0 10px oklch(var(--gold) / 0.2);
   }
 
   .star-divider {
