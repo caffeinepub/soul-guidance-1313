@@ -1017,15 +1017,6 @@ function Footer() {
             caffeine.ai
           </a>
         </p>
-        <div className="mt-4">
-          <a
-            href="#/admin"
-            data-ocid="footer.admin.link"
-            className="font-body text-muted-foreground/20 text-xs hover:text-muted-foreground/50 transition-colors duration-200"
-          >
-            Admin
-          </a>
-        </div>
       </div>
     </footer>
   );
@@ -1193,11 +1184,19 @@ function AdminPage() {
                           </div>
                         </CardHeader>
                         <CardContent className="px-6 pb-5">
-                          <div className="bg-background/50 rounded-xl border border-border/60 p-4">
+                          <div className="bg-background/50 rounded-xl border border-border/60 p-4 mb-4">
                             <p className="font-body text-sm text-foreground/80 leading-relaxed whitespace-pre-wrap">
                               {inquiry.message}
                             </p>
                           </div>
+                          <a
+                            href={`mailto:soulguidance1313@gmail.com?subject=Soul Guidance Query: ${encodeURIComponent(inquiry.serviceType)} from ${encodeURIComponent(inquiry.name)}&body=${encodeURIComponent(`Name: ${inquiry.name}\nContact: ${inquiry.contact}\nService: ${inquiry.serviceType}\n\nMessage:\n${inquiry.message}`)}`}
+                            data-ocid={`admin.inquiry.email.button.${idx + 1}`}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gold/30 bg-gold/5 text-gold hover:bg-gold/15 hover:border-gold/60 transition-all duration-200 font-body text-xs tracking-wider uppercase font-medium"
+                          >
+                            <Mail className="w-3.5 h-3.5" />
+                            Send to soulguidance1313@gmail.com
+                          </a>
                         </CardContent>
                       </div>
                     </div>
